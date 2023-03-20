@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WelcomeViewController: UITabBarController {
+class WelcomeViewController: UIViewController {
     
     private let signInButton: UIButton = {
        let button = UIButton()
@@ -47,6 +47,15 @@ class WelcomeViewController: UITabBarController {
     }
     
     private func handleSignIn(success: Bool) {
-        // Log user in or shopw an error
+        guard success else {
+            let alert = UIAlertController(title: "Ooops", message: "Something went wrong", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+            present(alert, animated: true)
+            return
+        }
+        
+        let mainAppTabBarVC = TabBarViewController()
+        mainAppTabBarVC.modalPresentationStyle = .fullScreen
+        present(mainAppTabBarVC, animated: true)
     }
 }

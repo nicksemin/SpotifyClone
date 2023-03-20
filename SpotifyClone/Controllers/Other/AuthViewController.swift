@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class AuthViewController: UITabBarController, WKNavigationDelegate {
+class AuthViewController: UIViewController, WKNavigationDelegate {
 
     private let webView: WKWebView = {
         let prefs = WKWebpagePreferences()
@@ -41,11 +41,11 @@ class AuthViewController: UITabBarController, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
-        
+
         let components = URLComponents(string: url.absoluteString)
         guard let code  = components?.queryItems?.first(where: {$0.name == "code"})?.value else { return }
         webView.isHidden = true
-        
+
         AuthManager.shared.exchangeCodeForToken(code: code) { [weak self] success in
             DispatchQueue.main.async {
                 self?.navigationController?.popToRootViewController(animated: true)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlaylistViewController: UITabBarController {
+class PlaylistViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

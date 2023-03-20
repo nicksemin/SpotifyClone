@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlayerViewController: UITabBarController {
+class PlayerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

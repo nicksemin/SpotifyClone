@@ -30,19 +30,28 @@ final class AuthManager {
     }
     
     var isSignedIn: Bool {
-        return false
+        accessToken != nil
     }
     
     private var accessToken: String? {
-        return nil
+        UserDefaults.standard.string(forKey: "accessToken")
+    }
+    
+    private var refreshToken: String? {
+        UserDefaults.standard.string(forKey: "refreshToken")
     }
     
     private var tokenExpirationDate: Date? {
-        return nil
+        UserDefaults.standard.object(forKey: "expirationDate") as? Date
     }
     
     private var shouldRefreshToken: Bool {
-        return false
+        guard let expirationDate = tokenExpirationDate else {
+            return false
+        }
+        let currentDate = Date()
+        let fiveMins: TimeInterval = 300
+        return currentDate.addingTimeInterval(fiveMins) >= expirationDate
     }
     
     public func exchangeCodeForToken(code: String, completion: @escaping ((Bool) -> Void)) {
@@ -60,21 +69,35 @@ final class AuthManager {
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("", forHTTPHeaderField: "string")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = components.query?.data(using: .utf8)
         
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+        let basicToken = Constants.clientID+":"+Constants.clientSecret
+        let dataForEncoding = basicToken.data(using: .utf8)
+        guard let base64String = dataForEncoding?.base64EncodedString() else {
+            print("Failed to encode to base64")
+            completion(false)
+            return
+        }
+        
+        request.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             guard let data = data, error == nil else {
                 completion(false)
                 return
             }
             
             do {
-                let json = try JSONSerialization.jsonObject(with: data,
-                                                            options: .allowFragments)
-                print("SUCCESS: \(json)")
+                let dataString = String(decoding: data, as: UTF8.self)
+                print(dataString)
+                let json = try JSONSerialization.jsonObject(with: data)
+                let result = try JSONDecoder().decode(AuthResponse.self, from: data)
+                self?.cacheToken(result: result)
+                completion(true)
             } catch {
-                print(error.localizedDescription)
+                print("Failed")
+                print(error)
                 completion(false)
             }
             
@@ -82,12 +105,21 @@ final class AuthManager {
         task.resume()
     }
     
-    private func cacheToken() {
+    private func cacheToken(result: AuthResponse) {
+        UserDefaults.standard.setValue(result.accessToken, forKey: "accessToken")
+        UserDefaults.standard.setValue(result.refreshToken, forKey: "refreshToken")
+        UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expirationTime)), forKey: "expirationDate")
         
     }
     
-    private func refreshToken() {
-        
+    private func refreshAccessToken(completion: @escaping (Bool) -> Void ){
+        guard shouldRefreshToken else {
+            completion(true)
+            return
+        }
+        guard let refreshToken = self.refreshToken else {
+            return
+        }
     }
 }
 

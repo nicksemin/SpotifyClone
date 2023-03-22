@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		660C402529CB8D7F001814D6 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660C402429CB8D7F001814D6 /* AuthResponse.swift */; };
 		66CA35D129BC6F3D00C27048 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CA35D029BC6F3D00C27048 /* AppDelegate.swift */; };
 		66CA35D329BC6F3D00C27048 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CA35D229BC6F3D00C27048 /* SceneDelegate.swift */; };
 		66CA35D529BC6F3D00C27048 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CA35D429BC6F3D00C27048 /* HomeViewController.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		660C402429CB8D7F001814D6 /* AuthResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		66CA35CD29BC6F3D00C27048 /* SpotifyClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotifyClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66CA35D029BC6F3D00C27048 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66CA35D229BC6F3D00C27048 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				66CA360629BC770300C27048 /* Playlist.swift */,
+				660C402429CB8D7F001814D6 /* AuthResponse.swift */,
 				66CA360829BC770B00C27048 /* AudioTrack.swift */,
 				66CA360A29BC771400C27048 /* Artist.swift */,
 				66CA360C29BC772000C27048 /* UserProfile.swift */,
@@ -260,6 +263,7 @@
 				66CA35EA29BC745400C27048 /* TabBarViewController.swift in Sources */,
 				66CA35D529BC6F3D00C27048 /* HomeViewController.swift in Sources */,
 				66CA360529BC759700C27048 /* HapticsManager.swift in Sources */,
+				660C402529CB8D7F001814D6 /* AuthResponse.swift in Sources */,
 				66CA360929BC770B00C27048 /* AudioTrack.swift in Sources */,
 				66CA35F229BC74DA00C27048 /* AuthViewController.swift in Sources */,
 				66CA35D129BC6F3D00C27048 /* AppDelegate.swift in Sources */,
